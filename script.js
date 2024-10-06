@@ -1,12 +1,18 @@
 function createGame (players, board) {
-    let playerOne = players.playerOne
-    let playerTwo = players.playerTwo
+    let playerOne = players.playerOneName
+    let playerTwo = players.playerTwoName
     
     return { playerOne, playerTwo, board }
 }
 
-function createPlayer (playerOne, playerTwo) {
-    return { playerOne, playerTwo }
+function createPlayer () {
+    const playerOne = document.querySelector("#player-one")
+    const playerTwo = document.querySelector("#player-two")
+    
+    const playerOneName = playerOne.value
+    const playerTwoName = playerTwo.value
+
+    return { playerOneName, playerTwoName }
 }
 
 const board = (function createBoard (gameBoard = "game") {
@@ -25,16 +31,13 @@ const board = (function createBoard (gameBoard = "game") {
 async function gameFlow (game, players) {
     for (let i = 0; i < 9; i++) {
         if (i%2 === 0) {
-            activePlayer = players.playerOne
+            activePlayer = players.playerOneName
         }
         else {
-            activePlayer = players.playerTwo
+            activePlayer = players.playerTwoName
         }
         let move = await makeMove(game)
         game.board[move] = activePlayer
-        if (game.board[move] === "") {
-            game.board[move] = activePlayer
-        } /* fix this so it lets you try again!*/
         renderGame(game)
         let statusCheck = victoryCheck(game)
         if (statusCheck !== "") {
@@ -175,5 +178,30 @@ function renderGame (game) {
     r3c3.textContent = game.board.r3c3
 }
 
-let players = createPlayer("ben", "egg")
-let game = createGame(players, board)
+function resetGame (game) {
+    game.board.r1c1 = ""
+    game.board.r1c2 = ""
+    game.board.r1c3 = ""
+    game.board.r2c1 = ""
+    game.board.r2c2 = ""
+    game.board.r2c3 = ""
+    game.board.r3c1 = ""
+    game.board.r3c2 = ""
+    game.board.r3c3 = ""
+
+    renderGame(game)
+
+    game = null
+    players = null
+    return
+}
+
+let start = document.querySelector("#start")
+start.addEventListener("click", () => {
+    event.preventDefault()
+    let players = createPlayer()
+    let game = createGame(players, board)
+    gameFlow(game, players)
+    document.querySelector("#new-game").reset()
+    resetGame(game)
+})

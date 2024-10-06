@@ -4,6 +4,32 @@
     box-sizing: border-box;
 }
 
+.header {
+    margin: 25px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+form {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input {
+    margin-top: 5px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+}
+
 .board {
     width: 300px;
     height: 300px;
