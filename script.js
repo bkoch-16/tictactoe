@@ -22,7 +22,7 @@ const board = (function createBoard (gameBoard = "game") {
     return {r1c1, r1c2, r1c3, r2c1, r2c2, r2c3, r3c1, r3c2, r3c3}
 })()
 
-function gameFlow (game, players) {
+async function gameFlow (game, players) {
     for (let i = 0; i < 9; i++) {
         if (i%2 === 0) {
             activePlayer = players.playerOne
@@ -30,11 +30,12 @@ function gameFlow (game, players) {
         else {
             activePlayer = players.playerTwo
         }
-        let move = prompt(`${activePlayer}, please input your move!`)
+        let move = await makeMove(game)
+        game.board[move] = activePlayer
         if (game.board[move] === "") {
             game.board[move] = activePlayer
         } /* fix this so it lets you try again!*/
-
+        renderGame(game)
         let statusCheck = victoryCheck(game)
         if (statusCheck !== "") {
             console.log(statusCheck + " wins!")
@@ -43,40 +44,74 @@ function gameFlow (game, players) {
     }
 }
 
-function transformMove (move) {
-    let moveIndex
-    switch (move) {
-        case "r1c1":
-            moveIndex = 0
-            break
-        case "r1c2":
-            moveIndex = 1
-            break
-        case "r1c3":
-            moveIndex = 2
-            break
-        case "r2c1":
-            moveIndex = 3
-            break
-        case "r2c2":
-            moveIndex = 4
-            break
-        case "r2c3":
-            moveIndex = 5
-            break
-        case "r3c1":
-            moveIndex = 6
-            break
-        case "r3c2":
-            moveIndex = 7
-            break
-        case "r3c3":
-            moveIndex = 8
-            break
-        default:
-            console.log("Error - bad move entry") 
-    }
-    return moveIndex
+function makeMove (game) {
+    let r1c1 = document.querySelector("#r1c1")
+    let r1c2 = document.querySelector("#r1c2")
+    let r1c3 = document.querySelector("#r1c3")
+    let r2c1 = document.querySelector("#r2c1")
+    let r2c2 = document.querySelector("#r2c2")
+    let r2c3 = document.querySelector("#r2c3")
+    let r3c1 = document.querySelector("#r3c1")
+    let r3c2 = document.querySelector("#r3c2")
+    let r3c3 = document.querySelector("#r3c3")
+
+    return new Promise((resolve) => {
+        let activeMove = ""
+        r1c1.addEventListener('click', () => {
+            if (r1c1.textContent.trim() === "") {
+                activeMove = "r1c1"
+                resolve(activeMove)
+            }
+        })
+        r1c2.addEventListener('click', () => {
+            if (r1c2.textContent.trim() === "") {
+                activeMove = "r1c2"
+                resolve(activeMove)
+            }
+        })
+        r1c3.addEventListener('click', () => {
+            if (r1c3.textContent.trim() === "") {
+                activeMove = "r1c3"
+                resolve(activeMove)
+            }
+        })
+        r2c1.addEventListener('click', () => {
+            if (r2c1.textContent.trim() === "") {
+                activeMove = "r2c1"
+                resolve(activeMove)
+            }
+        })
+        r2c2.addEventListener('click', () => {
+            if (r2c2.textContent.trim() === "") {
+                activeMove = "r2c2"
+                resolve(activeMove)
+            }
+        })
+        r2c3.addEventListener('click', () => {
+            if (r2c3.textContent.trim() === "") {
+                activeMove = "r2c3"
+                resolve(activeMove)
+            }
+        })
+        r3c1.addEventListener('click', () => {
+            if (r3c1.textContent.trim() === "") {
+                activeMove = "r3c1"
+                resolve(activeMove)
+            }
+        })
+        r3c2.addEventListener('click', () => {
+            if (r3c2.textContent.trim() === "") {
+                activeMove = "r3c2"
+                resolve(activeMove)
+            }
+        })
+        r3c3.addEventListener('click', () => {
+            if (r3c3.textContent.trim() === "") {
+                activeMove = "r3c3"
+                resolve(activeMove)
+            }
+        })  
+    })
 }
 
 function victoryCheck (game) {
@@ -119,9 +154,25 @@ function victoryCheck (game) {
 }
 
 function renderGame (game) {
-    for (tile in game.board) {
-        
-    }
+    let r1c1 = document.querySelector("#r1c1")
+    let r1c2 = document.querySelector("#r1c2")
+    let r1c3 = document.querySelector("#r1c3")
+    let r2c1 = document.querySelector("#r2c1")
+    let r2c2 = document.querySelector("#r2c2")
+    let r2c3 = document.querySelector("#r2c3")
+    let r3c1 = document.querySelector("#r3c1")
+    let r3c2 = document.querySelector("#r3c2")
+    let r3c3 = document.querySelector("#r3c3")
+
+    r1c1.textContent = game.board.r1c1
+    r1c2.textContent = game.board.r1c2
+    r1c3.textContent = game.board.r1c3
+    r2c1.textContent = game.board.r2c1
+    r2c2.textContent = game.board.r2c2
+    r2c3.textContent = game.board.r2c3
+    r3c1.textContent = game.board.r3c1
+    r3c2.textContent = game.board.r3c2
+    r3c3.textContent = game.board.r3c3
 }
 
 let players = createPlayer("ben", "egg")
