@@ -1,12 +1,12 @@
 function createGame (players, board) {
-    return { players, board }
+    let playerOne = players.playerOne
+    let playerTwo = players.playerTwo
+    
+    return { playerOne, playerTwo, board }
 }
 
-function createPlayer (player1, player2) {
-    let playerOne = player1
-    let playerTwo = player2
-    const players = [playerOne, playerTwo]
-    return { players }
+function createPlayer (playerOne, playerTwo) {
+    return { playerOne, playerTwo }
 }
 
 const board = (function createBoard (gameBoard = "game") {
@@ -19,18 +19,23 @@ const board = (function createBoard (gameBoard = "game") {
     let r3c1 = ""
     let r3c2 = ""
     let r3c3 = ""
-    let board = [r1c1, r1c2, r1c3, r2c1, r2c2, r2c3, r3c1, r3c2, r3c3]
-    return { board }
+    return {r1c1, r1c2, r1c3, r2c1, r2c2, r2c3, r3c1, r3c2, r3c3}
 })()
 
 function gameFlow (game, players) {
     for (let i = 0; i < 9; i++) {
-        let move = prompt(`${players.players[i % 2]}, please input your move!`)
-        game.board.board[transformMove(move)] = players.players[i % 2]
+        if (i%2 === 0) {
+            activePlayer = players.playerOne
+        }
+        else {
+            activePlayer = players.playerTwo
+        }
+        let move = prompt(`${activePlayer}, please input your move!`)
+        if (game.board[move] === "") {
+            game.board[move] = activePlayer
+        } /* fix this so it lets you try again!*/
+
         let statusCheck = victoryCheck(game)
-        console.log(game.board.board[0] + game.board.board[1] + game.board.board[2])
-        console.log(game.board.board[3] + game.board.board[4] + game.board.board[5])
-        console.log(game.board.board[6] + game.board.board[7] + game.board.board[8])
         if (statusCheck !== "") {
             console.log(statusCheck + " wins!")
             return
@@ -76,43 +81,46 @@ function transformMove (move) {
 
 function victoryCheck (game) {
     switch (true) {
-        case game.board.board[0] === game.board.board[4] 
-        && game.board.board[0] === game.board.board[8]:
-            console.log(game.board.board[0])
-            console.log(game.board.board[4])
-            console.log(game.board.board[8])
-            return game.board.board[0]
+        case game.board.r1c1 === game.board.r1c2 
+        && game.board.r1c1 === game.board.r1c3:
+            return game.board.r1c1
 
-        case game.board.board[1] === game.board.board[4] 
-        && game.board.board[1] === game.board.board[7]:
-            return game.board.board[1]
+        case game.board.r2c1 === game.board.r2c2 
+        && game.board.r2c1 === game.board.r2c3:
+            return game.board.r2c1
 
-        case game.board.board[2] === game.board.board[4] 
-        && game.board.board[2] === game.board.board[6]:
-            return game.board.board[2]
+        case game.board.r3c1 === game.board.r3c2 
+        && game.board.r3c1 === game.board.r3c3:
+            return game.board.r3c1
 
-        case game.board.board[0] === game.board.board[3] 
-        && game.board.board[0] === game.board.board[6]:
-            return game.board.board[0]
+        case game.board.r1c1 === game.board.r2c1 
+        && game.board.r1c1 === game.board.r3c1:
+            return game.board.r1c1
 
-        case game.board.board[3] === game.board.board[4] 
-        && game.board.board[3] === game.board.board[5]:
-            return game.board.board[3]
+        case game.board.r1c2 === game.board.r2c2 
+        && game.board.r1c2 === game.board.r3c2:
+            return game.board.r1c2
 
-        case game.board.board[2] === game.board.board[4] 
-        && game.board.board[2] === game.board.board[6]:
-            return game.board.board[2]
+        case game.board.r1c3 === game.board.r2c3 
+        && game.board.r1c3 === game.board.r3c3:
+            return game.board.r1c3
 
-        case game.board.board[2] === game.board.board[5] 
-        && game.board.board[2] === game.board.board[8]:
-            return game.board.board[2]
+        case game.board.r1c1 === game.board.r2c2 
+        && game.board.r1c1 === game.board.r3c3:
+            return game.board.r1c1
 
-        case game.board.board[6] === game.board.board[7] 
-        && game.board.board[6] === game.board.board[8]:
-            return game.board.board[6]
+        case game.board.r1c3 === game.board.r2c2 
+        && game.board.r1c3 === game.board.r3c1:
+            return game.board.r1c3
         
         default:
             return  ""  
+    }
+}
+
+function renderGame (game) {
+    for (tile in game.board) {
+        
     }
 }
 
