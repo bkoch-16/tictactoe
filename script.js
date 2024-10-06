@@ -41,7 +41,7 @@ async function gameFlow (game, players) {
         renderGame(game)
         let statusCheck = victoryCheck(game)
         if (statusCheck !== "") {
-            console.log(statusCheck + " wins!")
+            alert(statusCheck + " wins! Input player names and press 'Start' to play again!")
             return
         }
     }
