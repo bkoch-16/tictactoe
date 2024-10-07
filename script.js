@@ -44,6 +44,9 @@ async function gameFlow (game, players) {
             alert(statusCheck + " wins! Input player names and press 'Start' to play again!")
             return
         }
+        else if (i === 8) {
+            alert("You tied! Input player names and press 'Start' to play again!")
+        }
     }
 }
 
