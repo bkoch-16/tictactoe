@@ -1,18 +1,20 @@
-function createGame (players, board) {
-    let playerOne = players.playerOneName
-    let playerTwo = players.playerTwoName
-    
-    return { playerOne, playerTwo, board }
+class createGame {
+    constructor(players, board) {
+        this.playerOne = players.playerOneName
+        this.playerTwo = players.playerTwoName
+        this.board = board
+    }
 }
 
-function createPlayer () {
-    const playerOne = document.querySelector("#player-one")
-    const playerTwo = document.querySelector("#player-two")
+class createPlayer {
+    constructor(){
+        const playerOne = document.querySelector("#player-one")
+        const playerTwo = document.querySelector("#player-two")
+        
+        this.playerOneName = playerOne.value
+        this.playerTwoName = playerTwo.value
+    }
     
-    const playerOneName = playerOne.value
-    const playerTwoName = playerTwo.value
-
-    return { playerOneName, playerTwoName }
 }
 
 const board = (function createBoard (gameBoard = "game") {
@@ -202,8 +204,8 @@ function resetGame (game) {
 let start = document.querySelector("#start")
 start.addEventListener("click", () => {
     event.preventDefault()
-    let players = createPlayer()
-    let game = createGame(players, board)
+    let players = new createPlayer()
+    let game = new createGame(players, board)
     gameFlow(game, players)
     document.querySelector("#new-game").reset()
     resetGame(game)
